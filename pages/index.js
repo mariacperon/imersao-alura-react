@@ -1,37 +1,9 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
 import appConfig from '../config.json';
-
-function GlobalStyle() {
-    return (
-        <style global jsx>{`
-            *{
-                margig: 0;
-                padding: 0;
-                box-sizing: border-box;
-                list-style: none;
-            }
-            body{
-                font-family: 'Open Sans' sans-serif;
-            }
-            /*App fit height*/
-            html, body, #__next{
-                min-height: 100vh;
-                display: flex;
-                flex: 1;
-            }
-            #__next{
-                flex: 1;
-            }
-            #__next > *{
-                flex: 1;
-            }
-            /*./App fit height */
-        `}</style>
-    )
-}
+import { useRouter } from 'next/router';
 
 function Title(props) {
-    console.log(props);
     const Tag = props.tag || 'h1';
     return (
         <>
@@ -48,27 +20,13 @@ function Title(props) {
     );
 }
 
-/*
-//COMPONENTE REACT
-function HomePage(){
-    //JSX
-    return (
-        <div>
-            <GlobalStyle></GlobalStyle>
-            <Title tag="h2">Boas vindas  de volta!</Title>
-            <h2>Discord - Alura Matrix</h2>
-        </div>
-    )
-}
-
-export default HomePage */
-
 export default function PaginaInicial() {
-    const username = 'mariacperon';
+    //const username = 'mariacperon';
+    const [username, setUsername] = React.useState('mariacperon');
+    const roteamento = useRouter(); 
 
     return (
         <>
-            <GlobalStyle />
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -95,6 +53,12 @@ export default function PaginaInicial() {
                     {/* Formulário */}
                     <Box
                         as="form"
+                        onSubmit={function (event){
+                            event.preventDefault();
+                            console.log('Algúem submeteu o form')
+                            //window.location.href = '/chat';
+                            roteamento.push('/chat');
+                        }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -105,7 +69,25 @@ export default function PaginaInicial() {
                             {appConfig.name}
                         </Text>
 
+                        {/*<input
+                            type = "text"
+                            value= {username}
+                            onChange={function (event){
+                                console.log('usuário digitou', event.target.value)
+                                //trocar o valor da variável
+                                const valor =  event.target.value;
+                                setUsername(valor);
+                            }}
+                        />*/}
+
                         <TextField
+                            value= {username}
+                            onChange={function (event){
+                                console.log('usuário digitou', event.target.value)
+                                //trocar o valor da variável
+                                const valor =  event.target.value;
+                                setUsername(valor);
+                            }}
                             fullWidth
                             textFieldColors={{
                                 neutral: {
