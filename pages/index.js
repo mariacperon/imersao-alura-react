@@ -112,7 +112,6 @@ export default function PaginaInicial() {
                     </Box>
                     {/* Formulário */}
 
-
                     {/* Photo Area */}
                     <Box
                         styleSheet={{
